@@ -1,0 +1,26 @@
+- name: General setup
+  hosts: all
+
+  tasks:
+    - name: install some nice packages
+      apt:
+        # I usually keep update_cache disabled because it's very slow
+        # update_cache: true
+        pkg:
+          - vim
+          - zsh
+          - fzf
+          - ripgrep
+    
+    - name: don't do anything when the lid is closed
+      lineinfile:
+        regex: .*HandleLidSwitchExternalPower.*
+        line: HandleLidSwitchExternalPower=ignore
+        path: /etc/systemd/logind.conf
+      notify: restart systemd-logind
+
+  handlers:
+    - name: restart systemd-logind
+      systemd:
+        name: systemd-logind
+        state: restarted
