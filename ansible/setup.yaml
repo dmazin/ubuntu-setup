@@ -11,6 +11,7 @@
           - zsh
           - fzf
           - ripgrep
+          - tmux
     
     - name: don't do anything when the lid is closed
       lineinfile:
@@ -18,6 +19,12 @@
         line: HandleLidSwitchExternalPower=ignore
         path: /etc/systemd/logind.conf
       notify: restart systemd-logind
+
+    - name: Install Docker
+      include_tasks: docker.yaml
+
+    - name: Install GH CLI
+      include_tasks: github.yaml
 
   handlers:
     - name: restart systemd-logind

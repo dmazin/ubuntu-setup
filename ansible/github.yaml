@@ -1,0 +1,26 @@
+- name: Ensure that the /etc/apt/keyrings dir exists
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    group: root
+    owner: root
+    mode: 0755
+
+- name: Add GitHub CLI GPG key
+  get_url:
+    url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
+    dest: /etc/apt/keyrings/gh-cli.gpg
+
+- name: Add GH CLI repo
+  vars:
+    architecture_map:
+      aarch64: arm64
+      x86_64: amd64
+  apt_repository:
+    filename: github-cli
+    repo: 'deb [arch={{ architecture_map[ansible_architecture] }} signed-by=/etc/apt/keyrings/gh-cli.gpg] https://cli.github.com/packages stable main'
+
+- name: Install GH CLI
+  apt:
+    pkg:
+      - gh
