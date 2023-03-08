@@ -2,6 +2,15 @@
   hosts: all
 
   tasks:
+    - name: Set default shell for dmitry and configure groups
+      user:
+        name: dmitry
+        shell: /bin/zsh
+        groups:
+          - sudo
+          - docker
+        append: yes
+
     - name: install some nice packages
       apt:
         # I usually keep update_cache disabled because it's very slow
