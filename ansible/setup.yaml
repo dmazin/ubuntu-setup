@@ -12,6 +12,8 @@
           - fzf
           - ripgrep
           - tmux
+          - htop
+          - atop
     
     - name: don't do anything when the lid is closed
       lineinfile:
