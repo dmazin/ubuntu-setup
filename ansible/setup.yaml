@@ -37,8 +37,19 @@
     - name: Install GH CLI
       include_tasks: github.yaml
 
+    - name: enable sysstat
+      lineinfile:
+        regex: .*ENABLED.*
+        line: ENABLED="true"
+        path: /etc/default/sysstat
+      notify: restart sysstat
+
   handlers:
     - name: restart systemd-logind
       systemd:
         name: systemd-logind
+        state: restarted
+    - name: restart sysstat
+      systemd:
+        name: sysstat
         state: restarted

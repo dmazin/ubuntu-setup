@@ -1,3 +1,4 @@
 all:
   hosts:
-    dmitry-mbp-15
+    dmitry-mbp-15.local:
+    dmitry-mbp-15.remote:
