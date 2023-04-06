@@ -23,7 +23,8 @@
           - atop
           - zoxide
           - sysstat
-    
+          - curl
+
     - name: Set default shell for dmitry to zsh
       user:
         name: dmitry
@@ -49,6 +50,80 @@
         path: /etc/default/sysstat
       notify: restart sysstat
 
+    - name: Disable password authentication
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: ^PasswordAuthentication
+        line: PasswordAuthentication no
+      notify: restart sshd
+
+    - name: Disable root login
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: ^PermitRootLogin
+        line: PermitRootLogin no
+      notify: restart sshd
+
+    - name: Disable empty passwords
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: ^PermitEmptyPasswords
+        line: PermitEmptyPasswords no
+      notify: restart sshd
+
+    - name: Create /home/dmitry/dev
+      file:
+        path: /home/dmitry/dev
+        state: directory
+        owner: dmitry
+        group: dmitry
+
+    # For this to work, you must first authenticate with GH on the remote machine:
+    # ```
+    # gh auth login
+    # On another computer, visit https://github.com/login/device/
+    # gh auth setup-git
+    # ```
+    - name: Clone dmazin/dotfiles
+      become_user: dmitry
+      become: true
+      git:
+        accept_hostkey: true  # Otherwise, will hang if we've never connected to GitHub before
+        repo: git@github.com:dmazin/dotfiles.git
+        dest: /home/dmitry/dev/dotfiles
+
+    - name: Copy .zshrc.base.inc from dotfiles into .zshrc.base.inc
+      copy:
+        src: /home/dmitry/dev/dotfiles/.zshrc.base.inc
+        dest: /home/dmitry/.zshrc.base.inc
+        remote_src: yes
+
+    - name: Copy .zshrc.ubuntu from dotfiles into .zshrc
+      copy:
+        src: /home/dmitry/dev/dotfiles/.zshrc.ubuntu
+        dest: /home/dmitry/.zshrc
+        remote_src: yes
+
+    - name: Copy .gitconfig
+      copy:
+        src: /home/dmitry/dev/dotfiles/.gitconfig
+        dest: /home/dmitry/.gitconfig
+        remote_src: yes
+
+    - name: Copy .tmux.conf
+      copy:
+        src: /home/dmitry/dev/dotfiles/.tmux.conf
+        dest: /home/dmitry/.tmux.conf
+        remote_src: yes
+
+    - name: Clone zsh-pyenv-lazy
+      become_user: dmitry
+      become: true
+      git:
+        accept_hostkey: true  # Otherwise, will hang if we've never connected to GitHub before
+        repo: git@github.com:davidparsson/zsh-pyenv-lazy.git
+        dest: /home/dmitry/.oh-my-zsh/custom/plugins/pyenv-lazy
+
   handlers:
     - name: restart systemd-logind
       systemd:
@@ -57,4 +132,8 @@
     - name: restart sysstat
       systemd:
         name: sysstat
+        state: restarted
+    - name: restart sshd
+      systemd:
+        name: sshd
         state: restarted
