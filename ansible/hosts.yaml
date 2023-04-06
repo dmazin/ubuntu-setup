@@ -1,4 +1,3 @@
 all:
   hosts:
-    dmitry-mbp-15.local:
-    dmitry-mbp-15.remote:
+    dmitry-ubuntu-desktop:

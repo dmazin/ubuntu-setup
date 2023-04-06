@@ -2,13 +2,11 @@
   hosts: all
 
   tasks:
-    - name: Set default shell for dmitry and configure groups
+    - name: Give dmitry sudo
       user:
         name: dmitry
-        shell: /bin/zsh
         groups:
           - sudo
-          - docker
         append: yes
 
     - name: install some nice packages
@@ -23,16 +21,23 @@
           - tmux
           - htop
           - atop
+          - zoxide
+          - sysstat
     
-    - name: don't do anything when the lid is closed
-      lineinfile:
-        regex: .*HandleLidSwitchExternalPower.*
-        line: HandleLidSwitchExternalPower=ignore
-        path: /etc/systemd/logind.conf
-      notify: restart systemd-logind
+    - name: Set default shell for dmitry to zsh
+      user:
+        name: dmitry
+        shell: /bin/zsh
 
     - name: Install Docker
       include_tasks: docker.yaml
+
+    - name: Put dmitry in the docker group
+      user:
+        name: dmitry
+        groups:
+          - docker
+        append: yes
 
     - name: Install GH CLI
       include_tasks: github.yaml
