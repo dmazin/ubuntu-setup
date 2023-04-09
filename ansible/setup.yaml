@@ -26,7 +26,11 @@
           - curl
           - python-is-python3
           - python3-pip
-          - build-essential
+          - linux-tools-common
+          - linux-tools-generic
+          # When I ran perf, it told me to install this
+          - linux-tools-5.19.0-38-generic
+          # All of these were required to install Python
           - build-essential
           - zlib1g-dev
           - libffi-dev
