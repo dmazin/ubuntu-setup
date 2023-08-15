@@ -40,7 +40,6 @@
           - libreadline-dev
           - libsqlite3-dev
           - wget
-          - curl
           - llvm
           - libncursesw5-dev
           - libgdbm-dev
@@ -57,13 +56,6 @@
 
     - name: Install Docker
       include_tasks: docker.yaml
-
-    - name: Put dmitry in the docker group
-      user:
-        name: dmitry
-        groups:
-          - docker
-        append: yes
 
     - name: Install GH CLI
       include_tasks: github.yaml
@@ -157,10 +149,10 @@
         repo: git@github.com:pyenv/pyenv.git
         dest: /home/dmitry/.pyenv
 
-    - name: Copy openAI API key
-      copy:
-        src: openai-api-key
-        dest: /home/dmitry/.openai-api-key
+    # - name: Copy openAI API key
+    #   copy:
+    #     src: openai-api-key
+    #     dest: /home/dmitry/.openai-api-key
 
   handlers:
     - name: restart systemd-logind

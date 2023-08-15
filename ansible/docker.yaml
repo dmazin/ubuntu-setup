@@ -28,3 +28,10 @@
       - containerd.io
       - docker-buildx-plugin
       - docker-compose-plugin
+
+- name: Put dmitry in the docker group
+  user:
+    name: dmitry
+    groups:
+      - docker
+    append: yes
