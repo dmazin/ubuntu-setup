@@ -1,0 +1,2 @@
+- [ ] Make it so that ansible isn't listed on the Ubuntu login screen (in fact make it so that the Ubuntu login screen is text fields)
+- [ ] Make it so that pressing hyper-d opens my web browser, etc
