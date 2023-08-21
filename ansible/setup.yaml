@@ -21,6 +21,8 @@
           - tmux
           - htop
           - atop
+          - i3
+          - rofi
           - zoxide
           - sysstat
           - curl
@@ -133,6 +135,13 @@
         dest: /home/dmitry/.tmux.conf
         remote_src: yes
 
+    - name: Copy i3 config
+      copy:
+        src: /home/dmitry/dev/dotfiles/.config/i3/config
+        dest: /home/dmitry/.config/i3/config
+        remote_src: yes
+      notify: reload i3
+
     - name: Clone zsh-pyenv-lazy
       become_user: dmitry
       become: true
@@ -167,3 +176,5 @@
       systemd:
         name: sshd
         state: restarted
+    - name: reload i3
+      command: i3-msg reload

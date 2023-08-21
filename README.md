@@ -65,3 +65,6 @@ pyenv global 3.11.3
 - [ ] Install VScode by [downloading the .deb](https://code.visualstudio.com/Download) (yes, also not doing it via ansible out of laziness)
 
 - [ ] Install Anki ([instructions](https://docs.ankiweb.net/platform/linux/installing.html))
+
+- [ ] Manually: change paste shortcut in terminal from <ctrl-shift-v> (seriously, WHO finds this easy to type?) to <ctrl-v> (TODO: somehow do this globally)
+
