@@ -61,3 +61,7 @@ pyenv global 3.11.3
   `git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv`
 
 - [ ] Install bpftrace using `ansible/files/install_bpftrace.sh`
+
+- [ ] Install VScode by [downloading the .deb](https://code.visualstudio.com/Download) (yes, also not doing it via ansible out of laziness)
+
+- [ ] Install Anki ([instructions](https://docs.ankiweb.net/platform/linux/installing.html))
