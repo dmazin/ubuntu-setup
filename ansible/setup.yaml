@@ -23,9 +23,11 @@
           - atop
           - i3
           - rofi
+          - polybar
           - zoxide
           - sysstat
           - curl
+          - gnome-tweaks
           - python-is-python3
           - python3-pip
           - e2fsprogs
@@ -142,6 +144,13 @@
         remote_src: yes
       notify: reload i3
 
+    - name: Copy polybar config/launch script
+      copy:
+        src: /home/dmitry/dev/dotfiles/.config/polybar
+        dest: /home/dmitry/.config/polybar
+        remote_src: yes
+      notify: reload i3
+
     - name: Clone zsh-pyenv-lazy
       become_user: dmitry
       become: true
@@ -158,10 +167,28 @@
         repo: git@github.com:pyenv/pyenv.git
         dest: /home/dmitry/.pyenv
 
-    # - name: Copy openAI API key
+    # - name: Copy openAI API kecodey
     #   copy:
     #     src: openai-api-key
     #     dest: /home/dmitry/.openai-api-key
+
+    - name: Install Fira Sans for everyone
+      copy:
+        src: files/fonts/fira_sans/
+        dest: /usr/local/share/fonts/
+        owner: root
+        group: root
+        mode: '0644'
+      notify: Update font cache
+
+    - name: Install Fira Code for everyone
+      copy:
+        src: files/fonts/fira_code/
+        dest: /usr/local/share/fonts/
+        owner: root
+        group: root
+        mode: '0644'
+      notify: Update font cache
 
   handlers:
     - name: restart systemd-logind
@@ -178,3 +205,5 @@
         state: restarted
     - name: reload i3
       command: i3-msg reload
+    - name: Update font cache
+      command: fc-cache -fv
