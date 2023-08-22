@@ -190,6 +190,11 @@
         mode: '0644'
       notify: Update font cache
 
+    - name: Create alacritty desktop file
+      copy:
+        src: files/alacritty.desktop
+        dest: /home/dmitry/.local/share/applications
+
   handlers:
     - name: restart systemd-logind
       systemd:

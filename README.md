@@ -68,3 +68,4 @@ pyenv global 3.11.3
 
 - [ ] Manually: change paste shortcut in terminal from <ctrl-shift-v> (seriously, WHO finds this easy to type?) to <ctrl-v> (TODO: somehow do this globally)
 
+- [ ] Install rust: `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`

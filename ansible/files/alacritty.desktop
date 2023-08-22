@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Alacritty
+Comment=Alacritty Terminal
+Exec=/home/dmitry/.cargo/bin/alacritty
+Terminal=false
+Icon=alacritty
+Categories=System;TerminalEmulator;
+Keywords=terminal;emulator;
