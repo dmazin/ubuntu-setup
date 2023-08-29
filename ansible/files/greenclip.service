@@ -1,0 +1,12 @@
+[Unit]
+Description=Greenclip Clipboard Manager
+After=graphical.target
+
+[Service]
+Type=simple
+ExecStart=/home/dmitry/.local/bin/greenclip daemon
+Restart=on-failure
+User=root
+
+[Install]
+WantedBy=graphical.target

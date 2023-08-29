@@ -195,6 +195,21 @@
         src: files/alacritty.desktop
         dest: /home/dmitry/.local/share/applications
 
+    - name: Copy greenclip.service to systemd directory
+      copy:
+        src: files/greenclip.service
+        dest: /etc/systemd/system/
+        owner: root
+        group: root
+        mode: '0644'
+    
+    - name: enable (and start) greenclip.service
+      systemd:
+        name: greenclip.service
+        state: started
+        enabled: true
+        daemon_reload: true
+
   handlers:
     - name: restart systemd-logind
       systemd:
